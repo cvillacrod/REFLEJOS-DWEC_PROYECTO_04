@@ -35,7 +35,6 @@ export default function Home() {
   return (
     <>
       <div>
-        <p>Prueba</p>
         {datosDeportistas.length > 0 ? (
           datosDeportistas.map((deportista) => (
             <div key={deportista.id}>
