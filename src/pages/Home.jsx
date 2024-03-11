@@ -37,10 +37,14 @@ export default function Home() {
       <div>
         {datosDeportistas.length > 0 ? (
           datosDeportistas.map((deportista) => (
-            <div key={deportista.id}>
-              <p>ID: {deportista.id}</p>
-              <p>Nombre: {deportista.data.nombre} {deportista.data.apellido1} {deportista.data.apellido2}</p>
-              -------------
+            <div key={deportista.id} class="max-w-sm rounded overflow-hidden shadow-lg">
+              <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2">{deportista.data.nombre} {deportista.data.apellido1} {deportista.data.apellido2}</div>
+                <p class="text-gray-700 text-base">
+                  ID: {deportista.id}
+                </p>
+              </div>
+
             </div>
           ))
         ) : (
