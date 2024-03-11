@@ -8,12 +8,12 @@ import Login from '@/pages/Login';
 export default function Rutas() {
 
   return (
-    <Router>
-      <Routes>
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/' component={Home} />
-        <Route exact path='/about' component={About} />
-      </Routes>
-    </Router>
+    <>
+      <Route path="/login" element={<Login />} ></Route>
+
+      <Route path="/" element={<ProtectedRoutes />}>
+        <Route path="/" element={<Home />} />
+      </Route>
+    </>
   );
 }

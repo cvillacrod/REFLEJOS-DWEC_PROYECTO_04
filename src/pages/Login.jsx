@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,14 +13,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseAuth } from './../firebase/credentials'
 import { useNavigate } from "react-router-dom";
-
 const defaultTheme = createTheme();
-
 
 export default function Login() {
 
   const navigate = useNavigate();
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
