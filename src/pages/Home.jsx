@@ -9,6 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import PrimarySearchAppBar from './Toolbar';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,6 +57,8 @@ export default function Home() {
   const [datosDeportistas, setDatosDeportistas] = useState([]); // Cambiado a plural
   const [deportistasFiltrados, setDeportistasFiltrados] = useState([]);
 
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -92,6 +95,10 @@ export default function Home() {
     }
   }
 
+  const goToDetail = (idDeportista) => {
+    navigate(`../../deportista/${idDeportista}`)
+  }
+
   return (
     <>
       <PrimarySearchAppBar />
@@ -111,7 +118,7 @@ export default function Home() {
         <div>
           {deportistasFiltrados.length > 0 ? (
             deportistasFiltrados.map((deportista) => (
-              <div key={deportista.id} className="max-w-sm rounded overflow-hidden shadow-lg">
+              <div key={deportista.id} onClick={() => goToDetail(deportista.id)} className="max-w-sm rounded overflow-hidden shadow-lg">
                 <div className="px-6 py-4">
                   <div className="font-bold text-xl mb-2">{deportista.data.nombre} {deportista.data.apellido1} {deportista.data.apellido2}</div>
                   <p className="text-gray-700 text-base">
