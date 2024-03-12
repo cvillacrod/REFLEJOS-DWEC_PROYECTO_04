@@ -1,7 +1,9 @@
+/* Estilos de Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Reglas personalizadas */
 @layer base {
   /* inter-regular - latin */
   @font-face {
@@ -63,7 +65,4 @@
     @apply w-11/12 mx-auto;
   }
 }
-
-
-
 
