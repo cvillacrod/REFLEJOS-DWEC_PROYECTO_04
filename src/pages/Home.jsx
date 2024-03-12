@@ -123,7 +123,7 @@ export default function Home() {
       </Search>
 
 
-      <div className="container mx-auto mt-5  flex flex-row flex-wrap justify-center">
+      <div className="container mx-auto mt-5  flex flex-row flex-wrap " style={{ width: '80%' }}>
           {deportistasFiltrados.length > 0 ? (
             deportistasFiltrados.map((deportista) => (
             <div  className="max-w-sm rounded overflow-hidden shadow-lg mx-2 ">
@@ -138,7 +138,7 @@ export default function Home() {
                                       sx={{ width: 120, height: 120,}}
                                   />
                       </Stack>
-                      <div className="font-bold text-x1 mb-2 underline" style={{ textAlign: 'center' }}>{deportista.data.nombre} {deportista.data.apellido1} {deportista.data.apellido2}</div>
+                      <div className="font-bold text-x1 mb-2 underline" style={{ fontSize: '18px', textAlign: 'center', marginTop: '15px' }}>{deportista.data.nombre} {deportista.data.apellido1} {deportista.data.apellido2}</div>
                       <p className="text-gray-700 text-base">
                         <p><strong>ID:</strong> {deportista.id}</p>
                           <p><strong>Club:</strong> {deportista.data.club}</p>
