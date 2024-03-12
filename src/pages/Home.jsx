@@ -10,6 +10,11 @@ import PrimarySearchAppBar from './Toolbar';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -118,11 +123,26 @@ export default function Home() {
         <div>
           {deportistasFiltrados.length > 0 ? (
             deportistasFiltrados.map((deportista) => (
-              <div key={deportista.id} onClick={() => goToDetail(deportista.id)} className="max-w-sm rounded overflow-hidden shadow-lg">
-                <div className="px-6 py-4">
-                  <div className="font-bold text-xl mb-2">{deportista.data.nombre} {deportista.data.apellido1} {deportista.data.apellido2}</div>
+            <div  className="max-w-sm rounded overflow-hidden shadow-lg">
+                <div className="px-6 py-4">                
+                  <Stack direction="row" spacing={2} justifyContent="center">
+                  <Avatar
+                    alt={deportista.data.nombre}
+                    //src="/static/images/avatar/1.jpg"                   
+                    sx={{ width: 120,           
+                      height: 120,
+                    }}
+                 />
+                </Stack>
+                  <div className="font-bold text-x1 mb-2 underline" style={{ textAlign: 'center' }}>{deportista.data.nombre} {deportista.data.apellido1} {deportista.data.apellido2}</div>
                   <p className="text-gray-700 text-base">
-                    ID: {deportista.id}
+                  <p><strong>ID:</strong> {deportista.id}</p>
+                    <p><strong>Club:</strong> {deportista.data.club}</p>
+                    <p><strong>Deporte:</strong> {deportista.data.deporte}</p>
+                    <p><strong>Fecha de Nacimiento:</strong> {new Date(deportista.data.fechanacimiento.seconds * 1000).toLocaleDateString()}</p>       
+                    <div key={deportista.id} onClick={() => goToDetail(deportista.id)}>
+                      <center><Button variant="contained">RESULTADOS</Button></center>
+                    </div>
                   </p>
                 </div>
 
