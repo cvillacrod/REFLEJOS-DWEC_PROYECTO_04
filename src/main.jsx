@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import { createRoot } from 'react-dom/client';
 import Home from './pages/Home';
 import ProtectedRoutes from './routes/ProtectedRoute';
+import Detail from './pages/Detail';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
 
       <Route path="/" element={<ProtectedRoutes />}>
         <Route path="/" element={<Home />} />
+        <Route path="/deportista/:id" element={<Detail />} ></Route>
       </Route>
     </>
   )
