@@ -16,7 +16,7 @@ const router = createBrowserRouter(
 
       <Route path="/" element={<ProtectedRoutes />}>
         <Route path="/" element={<Home />} />
-        <Route path="/deportista/:sportsmanId" element={<Detail />} ></Route>
+        <Route path="/deportista/:sportsmanId/:sportsmanName" element={<Detail />} ></Route>
       </Route>
     </>
   )

@@ -75,7 +75,7 @@ export default function Home() {
         if (!snapshot.empty) {
           const deportistas = snapshot.docs.map((deportista) => ({
             id: deportista.id,
-            data: deportista.data(),
+            ...deportista.data(),
           }));
           setDatosDeportistas(deportistas);
           setDeportistasFiltrados(deportistas); // genero copia de deportistas
@@ -96,15 +96,15 @@ export default function Home() {
     } else { // si llega algo en el filtro lo aplico
       let deportistasFil = [...datosDeportistas];
       deportistasFil = deportistasFiltrados.filter(dep => {
-        const nombreCompleto = `${dep.data.nombre} ${dep.data.apellido1} ${dep.data.apellido2} `
+        const nombreCompleto = `${dep.nombre} ${dep.apellido1} ${dep.apellido2} `
         return nombreCompleto.toLowerCase().includes(filtro)
       });
       setDeportistasFiltrados(deportistasFil);
     }
   }
 
-  const goToDetail = (idDeportista) => {
-    navigate(`../../deportista/${idDeportista}`)
+  const goToDetail = (idDeportista, nombreDeportista) => {
+    navigate(`../../deportista/${idDeportista}/${nombreDeportista}`)
   }
 
   return (
@@ -133,22 +133,22 @@ export default function Home() {
                   <CardContent>
                     <Stack direction="row" spacing={2} justifyContent="center">
                       <Avatar
-                        alt={deportista.data.nombre}
+                        alt={deportista.nombre}
                         //src="/static/images/avatar/1.jpg"                   
                         sx={{ width: 120, height: 120, }}
                       />
                     </Stack>
-                    <div className="font-bold text-x1 mb-2 underline" style={{ fontSize: '18px', textAlign: 'center', marginTop: '15px' }}>{deportista.data.nombre} {deportista.data.apellido1} {deportista.data.apellido2}</div>
+                    <div className="font-bold text-x1 mb-2 underline" style={{ fontSize: '18px', textAlign: 'center', marginTop: '15px' }}>{deportista.nombre} {deportista.apellido1} {deportista.apellido2}</div>
                     <p className="text-gray-700 text-base">
                       <p><strong>ID:</strong> {deportista.id}</p>
-                      <p><strong>Club:</strong> {deportista.data.club}</p>
-                      <p><strong>Deporte:</strong> {deportista.data.deporte}</p>
-                      <p><strong>Fecha de Nacimiento:</strong> {new Date(deportista.data.fechanacimiento.seconds * 1000).toLocaleDateString()}</p>
+                      <p><strong>Club:</strong> {deportista.club}</p>
+                      <p><strong>Deporte:</strong> {deportista.deporte}</p>
+                      <p><strong>Fecha de Nacimiento:</strong> {new Date(deportista.fechanacimiento.seconds * 1000).toLocaleDateString()}</p>
                     </p>
 
                   </CardContent>
                   <CardActions>
-                    <div key={deportista.id} onClick={() => goToDetail(deportista.id)}>
+                    <div key={deportista.id} onClick={() => goToDetail(deportista.id, `${deportista.nombre} ${deportista.apellido1} ${deportista.apellido2}`)}>
                       <Button variant="contained">RESULTADOS</Button>
                     </div>
                   </CardActions>

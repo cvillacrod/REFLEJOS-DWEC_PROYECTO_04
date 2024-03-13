@@ -6,8 +6,9 @@ import { useParams } from 'react-router-dom';
 import PrimarySearchAppBar from './Toolbar';
 export default function Detail() {
 
-  let { sportsmanId } = useParams();
-  console.log('id de deportist cogido de la url', 'deportistas/' + sportsmanId)
+  let { sportsmanId, sportsmanName } = useParams();
+
+  console.log('id de deportist cogido de la url', 'deportistas/' + sportsmanId, sportsmanName)
 
   const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
 
@@ -17,6 +18,7 @@ export default function Detail() {
       try {
         const resultsRef = await getDocs(collection(db, 'resultados'));
         const programRef = await getDocs(collection(db, 'programas'));
+
 
         let programas = []; // aqui guardo todos los programas
 
@@ -56,6 +58,8 @@ export default function Detail() {
   return <div>
     <PrimarySearchAppBar />
 
+    <h2 className='mt-4 mx-auto'>Deportista: {sportsmanName}</h2>
+
     <div className="container mx-auto mt-5  flex flex-row flex-wrap " style={{ width: '80%' }}>
       {resultadosFiltrados.length > 0 ? (
         resultadosFiltrados.map((res) => (
@@ -65,7 +69,7 @@ export default function Detail() {
               <br />
               -----------------------------------
               <br />
-              Fecha: {Date(res.fecha)}
+              Fecha: {Date(res.fecha)} <br />
               Distancia dispositivo: {res.distanciaaldispositivo} <br />
               Media tiempo reaccion : {res.mediatiemporeaccion}<br />
               Numero de dispositivos apagados {res.numerodispositivosapagados}<br />
