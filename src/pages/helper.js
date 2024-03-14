@@ -12,7 +12,7 @@ const getReference = async documentReference => {
   return data
 }
 
-const hydrate = async (document, paths = []) => Promise.all(
+const hydrate = async (document, newDoc={}, paths = []) => Promise.all(
  
   paths.map(async path => {
     const documentReference = get(document, path)
@@ -24,8 +24,8 @@ const hydrate = async (document, paths = []) => Promise.all(
     }
 
     const result = await getReference(documentReference);
-    set(document, path, result)
-  })
+    set(newDoc, path, result)
+  }).flat()
 )
 
 export { hydrate }

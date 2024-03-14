@@ -5,6 +5,7 @@ import { db } from "./../firebase/credentials";
 import { useParams } from 'react-router-dom';
 import PrimarySearchAppBar from './Toolbar';
 import { hydrate } from './helper';
+import { cloneDeep } from 'lodash'
 
 export default function Detail() {
 
@@ -22,7 +23,7 @@ export default function Detail() {
     const result = await getDocFromReference(ref)
 
     if (isHydrated) {
-      hydrate(result, referencesToHydrate)
+      hydrate(result, referencesToHydrate, {})
       return result;
     } else {
       const snapshot = await getDoc(ref);
@@ -34,6 +35,7 @@ export default function Detail() {
   useEffect(() => {
     if (deportista) {
       const promises = deportista.resultados.map(async (el) => {
+        console.log(1111, deportista)
         const id = el.split('/')[1];
         return await getDocument(id, 'resultados', false)
 
@@ -43,20 +45,17 @@ export default function Detail() {
       });
       Promise.all(promises).then((resultados) => {
         // aqui hidratamos los resultados con los datos de idprograma y tipoejercicio
-        resultados.map(el => hydrate(el, ['idprograma', 'tipoejercicio']));
-        console.log(333, resultados)
-        setResultados(resultados)
+        // hago una copia con cambio de puntero
+        const deepCopy = cloneDeep(resultados);
+        // devuelve promesas
+        const ps = resultados.map((el, i) => hydrate(el, deepCopy[i], ['idprograma', 'tipoejercicio']));
+        // seteamos sin el hidrate
+        setResultados(resultados);
+        // hidrata los resultados con sus hijos, cambiando la referencia para que el front se entere
+        Promise.all(ps).then(() => setResultados(deepCopy))
       });
     }
   }, [deportista]);
-
-
-  useEffect(() => {
-    if (resultados.length) {
-      console.log('use effect resultados', resultados)
-    }
-  }, [resultados])
-
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -83,7 +82,7 @@ export default function Detail() {
         resultados.map((res, i) => (
           <div key={i} className="max-w-sm rounded overflow-hidden shadow-lg mx-2 ">
             <div className="px-6 py-4">
-              Programa: {res.idprograma.descripcion}++
+              Programa: {res.idprograma.descripcion}
               <br />
               -----------------------------------
               <br />
