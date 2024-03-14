@@ -103,8 +103,8 @@ export default function Home() {
     }
   }
 
-  const goToDetail = (idDeportista, nombreDeportista) => {
-    navigate(`../../deportista/${idDeportista}/${nombreDeportista}`)
+  const goToDetail = (idDeportista) => {
+    navigate(`../../deportista/${idDeportista}`)
   }
 
   return (
@@ -148,7 +148,7 @@ export default function Home() {
 
                   </CardContent>
                   <CardActions>
-                    <div key={deportista.id} onClick={() => goToDetail(deportista.id, `${deportista.nombre} ${deportista.apellido1} ${deportista.apellido2}`)}>
+                    <div key={deportista.id} onClick={() => goToDetail(deportista.id)}>
                       <Button variant="contained">RESULTADOS</Button>
                     </div>
                   </CardActions>
