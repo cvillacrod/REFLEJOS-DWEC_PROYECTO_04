@@ -37,7 +37,7 @@ export default function Detail() {
       const promises = deportista.resultados.map(async (el) => {
         console.log(1111, deportista)
         const id = el.split('/')[1];
-        return await getDocument(id, 'resultados', false)
+        return await getDocument(id, 'resultados')
 
         // sin hidratar
         //const resRef = doc(db, 'resultados', id);
