@@ -11,6 +11,7 @@ import HourglassBottomOutlinedIcon from '@mui/icons-material/HourglassBottomOutl
 import WarningIcon from '@mui/icons-material/Warning';
 import HistoryTwoToneIcon from '@mui/icons-material/HistoryTwoTone';
 import HikingTwoToneIcon from '@mui/icons-material/HikingTwoTone';
+import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -20,6 +21,10 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import RepeatIcon from '@mui/icons-material/Repeat';
+
+import EventRepeatRoundedIcon from '@mui/icons-material/EventRepeatRounded';
+
+import DirectionsRunTwoToneIcon from '@mui/icons-material/DirectionsRunTwoTone';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import { grey } from '@mui/material/colors';
@@ -32,6 +37,29 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
+
+/*barra separacion*/
+import { styled } from '@mui/material/styles';
+import Divider from '@mui/material/Divider';
+import Chip from '@mui/material/Chip';
+
+const Root = styled('div')(({ theme }) => ({
+  width: '100%',
+  ...theme.typography.body2,
+  color: theme.palette.text.secondary,
+  '& > :not(style) ~ :not(style)': {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+//mas informacion programa
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
+
 
 export default function Detail() {
 
@@ -108,15 +136,30 @@ export default function Detail() {
         resultados.map((res, i) => (
           <div key={i} className="max-w-sm rounded overflow-hidden shadow-lg mx-2 ">
             <div className="px-6 py-4">
-              Programa: {res.idprograma.descripcion}<br />
-              Tiempo ejercicio: {res.idprograma.tejercicio}<br />
-              Tiempo descanso: {res.idprograma.tejercicio}<br />
-              Distancia: {res.idprograma.tejercicio}<br />
-              Numero de ciclos: {res.idprograma.nciclos}<br />
-              <br />
-              -----------------------------------
-              <br />
-              <strong>Fecha:</strong>
+
+              <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ArrowDropDownIcon />}
+                    aria-controls="panel2-content"
+                    id="panel2-header"
+                  >
+                  
+                    <Typography ><strong>PROGRAMA: </strong>{res.idprograma.descripcion}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                    <Divider ><Chip label="detalles" size="small" /></Divider>
+                    Tiempo ejercicio: {res.idprograma.tejercicio}<br />
+                    Tiempo descanso: {res.idprograma.tejercicio}<br />
+                    Distancia: {res.idprograma.tejercicio}<br />
+                    Numero de ciclos: {res.idprograma.nciclos}<br />
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <br></br>
+
+
+              <strong><Divider>RESULTADOS</Divider></strong>
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>   
 
@@ -129,13 +172,15 @@ export default function Detail() {
                     ]}
                   >
                     <DemoItem>
+                    <div style={{ textAlign: 'center' }}>
                       <DesktopDateTimePicker
-                          readOnly  
+                          readOnly   
                           format="DD-MMMM-YYYY HH:mm"
                           // Utiliza el valor de fecha completa res?.fecha como defaultValue
                           defaultValue={res?.fecha && dayjs(res?.fecha.seconds * 1000)}
                         />
-                   </DemoItem>                  
+                    </div>
+                   </DemoItem>                 
                 
                   </DemoContainer>
                 </LocalizationProvider>
@@ -155,8 +200,8 @@ export default function Detail() {
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineConnector />
-                    <TimelineDot>                      
-                      <HikingTwoToneIcon/>
+                    <TimelineDot>             
+                      <DirectionsRunTwoToneIcon/>
                       <RepeatIcon />
                     </TimelineDot>
                     <TimelineConnector />
