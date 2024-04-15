@@ -59,8 +59,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-
-
 export default function Detail() {
 
   let { sportsmanId } = useParams();
@@ -85,23 +83,22 @@ export default function Detail() {
     }
   }
 
+  useEffect(() => {
+    console.log('resultados', resultados)
+  }, [resultados])
+
 
   useEffect(() => {
     if (deportista) {
-      const promises = deportista.resultados.map(async (el) => {
-        console.log(1111, deportista)
-        const id = el.split('/')[1];
-        return await getDocument(id, 'resultados')
-
-        // sin hidratar
-        //const resRef = doc(db, 'resultados', id);
-        //return await getDocFromReference(resRef);
+      const promises = deportista.resultados.map(async (resul) => {
+        const snp = await getDoc(resul);
+        return snp.data();
       });
       Promise.all(promises).then((resultados) => {
         // aqui hidratamos los resultados con los datos de idprograma y tipoejercicio
         // hago una copia con cambio de puntero
         const deepCopy = cloneDeep(resultados);
-        // devuelve promesas
+        // devuelve promesas. Hidratamos con los datos de idPrograma y tipoEjercicio (pidiendo los doc reference)
         const ps = resultados.map((el, i) => hydrate(el, deepCopy[i], ['idprograma', 'tipoejercicio']));
         // seteamos sin el hidrate
         setResultados(resultados);
@@ -114,9 +111,8 @@ export default function Detail() {
   useEffect(() => {
     const obtenerDatos = async () => {
       try {
-        const res = await getDocument(sportsmanId, 'deportistas');
-        setDeportista(res);
-
+        const deportista = await getDocument(sportsmanId, 'deportistas');
+        setDeportista(deportista);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -138,52 +134,52 @@ export default function Detail() {
             <div className="px-6 py-4">
 
               <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ArrowDropDownIcon />}
-                    aria-controls="panel2-content"
-                    id="panel2-header"
-                  >
-                  
-                    <Typography ><strong>PROGRAMA: </strong>{res.idprograma.descripcion}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
+                <AccordionSummary
+                  expandIcon={<ArrowDropDownIcon />}
+                  aria-controls="panel2-content"
+                  id="panel2-header"
+                >
+
+                  <Typography ><strong>PROGRAMA: </strong>{res.idprograma.descripcion}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
                     <Divider ><Chip label="detalles" size="small" /></Divider>
                     Tiempo ejercicio: {res.idprograma.tejercicio}<br />
                     Tiempo descanso: {res.idprograma.tejercicio}<br />
                     Distancia: {res.idprograma.tejercicio}<br />
                     Numero de ciclos: {res.idprograma.nciclos}<br />
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <br></br>
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <br></br>
 
 
               <strong><Divider>RESULTADOS</Divider></strong>
 
-              <LocalizationProvider dateAdapter={AdapterDayjs}>   
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
 
-                  <DemoContainer
-                    components={[
-                      'DateTimePicker',
-                      'MobileDateTimePicker',
-                      'DesktopDateTimePicker',
-                      'StaticDateTimePicker',
-                    ]}
-                  >
-                    <DemoItem>
+                <DemoContainer
+                  components={[
+                    'DateTimePicker',
+                    'MobileDateTimePicker',
+                    'DesktopDateTimePicker',
+                    'StaticDateTimePicker',
+                  ]}
+                >
+                  <DemoItem>
                     <div style={{ textAlign: 'center' }}>
                       <DesktopDateTimePicker
-                          readOnly   
-                          format="DD-MMMM-YYYY HH:mm"
-                          // Utiliza el valor de fecha completa res?.fecha como defaultValue
-                          defaultValue={res?.fecha && dayjs(res?.fecha.seconds * 1000)}
-                        />
+                        readOnly
+                        format="DD-MMMM-YYYY HH:mm"
+                        // Utiliza el valor de fecha completa res?.fecha como defaultValue
+                        defaultValue={res?.fecha && dayjs(res?.fecha.seconds * 1000)}
+                      />
                     </div>
-                   </DemoItem>                 
-                
-                  </DemoContainer>
-                </LocalizationProvider>
+                  </DemoItem>
+
+                </DemoContainer>
+              </LocalizationProvider>
 
 
 
@@ -200,15 +196,15 @@ export default function Detail() {
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineConnector />
-                    <TimelineDot>             
-                      <DirectionsRunTwoToneIcon/>
+                    <TimelineDot>
+                      <DirectionsRunTwoToneIcon />
                       <RepeatIcon />
                     </TimelineDot>
                     <TimelineConnector />
                   </TimelineSeparator>
                   <TimelineContent sx={{ py: '12px', px: 2 }}>
                     <Typography variant="h6" component="span">
-                    Distancia
+                      Distancia
                     </Typography>
                     <Typography variant="body2">dispositivo</Typography>
                   </TimelineContent>
@@ -225,8 +221,8 @@ export default function Detail() {
 
                   <TimelineSeparator>
                     <TimelineConnector />
-                    <TimelineDot color="success">     
-                      <AddTaskTwoToneIcon sx={{fontSize: 30 }}/>
+                    <TimelineDot color="success">
+                      <AddTaskTwoToneIcon sx={{ fontSize: 30 }} />
                     </TimelineDot>
                     <TimelineConnector />
                   </TimelineSeparator>
@@ -239,7 +235,7 @@ export default function Detail() {
                 </TimelineItem>
 
                 <TimelineItem>
-                <TimelineOppositeContent
+                  <TimelineOppositeContent
                     sx={{ m: 'auto 0' }}
                     align="right"
                     variant="body2"
@@ -249,10 +245,10 @@ export default function Detail() {
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineConnector />
-                    <TimelineDot variant="primary" sx={{ color: red[500] }}>     
-                      <WarningIcon sx={{fontSize: 30 }}/>
+                    <TimelineDot variant="primary" sx={{ color: red[500] }}>
+                      <WarningIcon sx={{ fontSize: 30 }} />
                     </TimelineDot>
-       
+
                     <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
                   </TimelineSeparator>
                   <TimelineContent sx={{ py: '12px', px: 2 }}>
@@ -263,7 +259,7 @@ export default function Detail() {
                 </TimelineItem>
 
                 <TimelineItem>
-                <TimelineOppositeContent
+                  <TimelineOppositeContent
                     sx={{ m: 'auto 0' }}
                     align="right"
                     variant="body2"
@@ -273,8 +269,8 @@ export default function Detail() {
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-                    <TimelineDot  variant="sharp" sx={{ color: blue[500] }}>
-                      <PublishedWithChangesTwoToneIcon sx={{ color: blue[500] , fontSize: 30 }}/>
+                    <TimelineDot variant="sharp" sx={{ color: blue[500] }}>
+                      <PublishedWithChangesTwoToneIcon sx={{ color: blue[500], fontSize: 30 }} />
                     </TimelineDot>
 
 
@@ -282,14 +278,14 @@ export default function Detail() {
                   </TimelineSeparator>
                   <TimelineContent sx={{ py: '12px', px: 2 }}>
                     <Typography variant="h6" component="span">
-                    Reaccion
+                      Reaccion
                     </Typography>
                     <Typography variant="body2">media de tiempo </Typography>
                   </TimelineContent>
                 </TimelineItem>
 
                 <TimelineItem>
-                <TimelineOppositeContent
+                  <TimelineOppositeContent
                     sx={{ m: 'auto 0' }}
                     align="right"
                     variant="body2"
@@ -299,9 +295,9 @@ export default function Detail() {
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineConnector />
-                    
-                    <TimelineDot color="secondary">                     
-                     <HistoryTwoToneIcon sx={{ fontSize: 30 }}/>
+
+                    <TimelineDot color="secondary">
+                      <HistoryTwoToneIcon sx={{ fontSize: 30 }} />
                     </TimelineDot>
 
                     <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
@@ -314,8 +310,8 @@ export default function Detail() {
                   </TimelineContent>
                 </TimelineItem>
 
-                <TimelineItem>                
-                <TimelineOppositeContent
+                <TimelineItem>
+                  <TimelineOppositeContent
                     sx={{ m: 'auto 0' }}
                     align="right"
                     variant="body2"
@@ -325,9 +321,9 @@ export default function Detail() {
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-                             
-                    <TimelineDot variant="primary" sx={{ color: grey[700] }}>     
-                      <HourglassBottomOutlinedIcon sx={{fontSize: 30 }}/>
+
+                    <TimelineDot variant="primary" sx={{ color: grey[700] }}>
+                      <HourglassBottomOutlinedIcon sx={{ fontSize: 30 }} />
                     </TimelineDot>
 
                     <TimelineConnector />
@@ -339,22 +335,22 @@ export default function Detail() {
                     <Typography variant="body2">tiempo total empleado</Typography>
                   </TimelineContent>
                 </TimelineItem>
-                
+
               </Timeline>
 
-    
+
             </div>
 
-               </div>
+          </div>
         ))
       ) : (
         <p>Cargando datos...</p>
       )}
 
 
-      
+
     </div>
 
-    
+
   </div>;
 }
