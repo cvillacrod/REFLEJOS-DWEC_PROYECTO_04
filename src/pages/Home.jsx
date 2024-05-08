@@ -16,6 +16,7 @@ import Stack from '@mui/material/Stack';
 
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import { Box, MenuItem, Select } from '@mui/material';
 
 
 
@@ -60,13 +61,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const orderBy = [
+  { filter: 'name', text: 'Orden alfabético' },
+
+
+]
+
 export default function Home() {
 
   const [datosDeportistas, setDatosDeportistas] = useState([]); // Cambiado a plural
   const [deportistasFiltrados, setDeportistasFiltrados] = useState([]);
+  const [orderBy, setOrderBy] = useState('nombre');
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -88,6 +95,11 @@ export default function Home() {
     obtenerDatos();
   }, []); // El array vacío como segundo argumento asegura que useEffect se ejecute solo una vez al montar el componente
 
+  const handleOrderBy = (event) => {
+    console.log(333, event.target.value);
+    console.log(deportistasFiltrados)
+
+  }
 
   const onSubmit = (event) => {
     const filtro = event.target.value;
@@ -111,17 +123,31 @@ export default function Home() {
     <>
       <PrimarySearchAppBar />
 
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          onChange={onSubmit}
-          placeholder="Busca deportista.."
-          inputProps={{ 'aria-label': 'search' }}
-        />
-      </Search>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
+
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            onChange={onSubmit}
+            placeholder="Busca deportista.."
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+
+        <Select
+          labelId="order-by"
+          value={orderBy}
+          label="order-by"
+          onChange={handleOrderBy}
+        >
+          <MenuItem value={'deporte'}>Deporte</MenuItem>
+          <MenuItem value={'nombre'}>Orden alfabético</MenuItem>
+          <MenuItem value={'fecha-nacimiento'}>Fecha de nacimiento</MenuItem>
+        </Select>
+      </Box>
 
       <div className="container mx-auto mt-5  flex flex-row flex-wrap " style={{ width: '80%' }}>
         {deportistasFiltrados.length > 0 ? (

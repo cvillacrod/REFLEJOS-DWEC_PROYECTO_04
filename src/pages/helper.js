@@ -12,6 +12,8 @@ const getReference = async documentReference => {
   return data
 }
 
+// Esta función recibe un documento y hidrata los atributos que contienen 
+// documentReference que le pases dentro de paths
 const hydrate = async (document, newDoc={}, paths = []) => Promise.all(
  
   paths.map(async path => {
