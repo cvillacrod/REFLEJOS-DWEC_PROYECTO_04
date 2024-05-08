@@ -13,11 +13,9 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-
-
+import { Box } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,7 +65,6 @@ export default function Home() {
 
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const obtenerDatos = async () => {
       try {
@@ -111,17 +108,20 @@ export default function Home() {
     <>
       <PrimarySearchAppBar />
 
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          onChange={onSubmit}
-          placeholder="Busca deportista.."
-          inputProps={{ 'aria-label': 'search' }}
-        />
-      </Search>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
+
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            onChange={onSubmit}
+            placeholder="Busca deportista.."
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+      </Box>
 
       <div className="container mx-auto mt-5  flex flex-row flex-wrap " style={{ width: '80%' }}>
         {deportistasFiltrados.length > 0 ? (

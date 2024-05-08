@@ -6,12 +6,11 @@ import { useParams } from 'react-router-dom';
 import PrimarySearchAppBar from './Toolbar';
 import { hydrate } from './helper';
 import { cloneDeep } from 'lodash'
+
 import PublishedWithChangesTwoToneIcon from '@mui/icons-material/PublishedWithChangesTwoTone';
 import HourglassBottomOutlinedIcon from '@mui/icons-material/HourglassBottomOutlined';
 import WarningIcon from '@mui/icons-material/Warning';
 import HistoryTwoToneIcon from '@mui/icons-material/HistoryTwoTone';
-import HikingTwoToneIcon from '@mui/icons-material/HikingTwoTone';
-import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -22,14 +21,11 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import RepeatIcon from '@mui/icons-material/Repeat';
 
-import EventRepeatRoundedIcon from '@mui/icons-material/EventRepeatRounded';
-
 import DirectionsRunTwoToneIcon from '@mui/icons-material/DirectionsRunTwoTone';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import { grey } from '@mui/material/colors';
 import { blue } from '@mui/material/colors';
-import Icon from '@mui/material/Icon';
 
 /*para la fecha y hora*/
 import dayjs from 'dayjs';
@@ -43,20 +39,10 @@ import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
 
-const Root = styled('div')(({ theme }) => ({
-  width: '100%',
-  ...theme.typography.body2,
-  color: theme.palette.text.secondary,
-  '& > :not(style) ~ :not(style)': {
-    marginTop: theme.spacing(2),
-  },
-}));
-
 //mas informacion programa
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export default function Detail() {
@@ -82,11 +68,6 @@ export default function Detail() {
       return snapshot.data()
     }
   }
-
-  useEffect(() => {
-    console.log('resultados', resultados)
-  }, [resultados])
-
 
   useEffect(() => {
     if (deportista) {
@@ -154,7 +135,6 @@ export default function Detail() {
               </Accordion>
               <br></br>
 
-
               <strong><Divider>RESULTADOS</Divider></strong>
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -180,8 +160,6 @@ export default function Detail() {
 
                 </DemoContainer>
               </LocalizationProvider>
-
-
 
               <Timeline position="alternate">
 
@@ -338,7 +316,6 @@ export default function Detail() {
 
               </Timeline>
 
-
             </div>
 
           </div>
@@ -347,10 +324,6 @@ export default function Detail() {
         <p>Cargando datos...</p>
       )}
 
-
-
     </div>
-
-
   </div>;
 }
