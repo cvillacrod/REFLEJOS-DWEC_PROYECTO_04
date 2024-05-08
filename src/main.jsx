@@ -8,6 +8,7 @@ import { createRoot } from 'react-dom/client';
 import Home from './pages/Home';
 import ProtectedRoutes from './routes/ProtectedRoute';
 import Detail from './pages/Detail';
+import Error from './pages/Error';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<ProtectedRoutes />}>
         <Route path="/" element={<Home />} />
         <Route path="/deportista/:sportsmanId" element={<Detail />} ></Route>
+        <Route path="*" element={<Error />} />
       </Route>
     </>
   )

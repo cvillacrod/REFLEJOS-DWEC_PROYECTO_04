@@ -13,12 +13,9 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { Box, MenuItem, Select } from '@mui/material';
-
-
+import { Box } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -61,17 +58,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const orderBy = [
-  { filter: 'name', text: 'Orden alfabético' },
-
-
-]
-
 export default function Home() {
 
   const [datosDeportistas, setDatosDeportistas] = useState([]); // Cambiado a plural
   const [deportistasFiltrados, setDeportistasFiltrados] = useState([]);
-  const [orderBy, setOrderBy] = useState('nombre');
 
   const navigate = useNavigate();
 
@@ -95,11 +85,6 @@ export default function Home() {
     obtenerDatos();
   }, []); // El array vacío como segundo argumento asegura que useEffect se ejecute solo una vez al montar el componente
 
-  const handleOrderBy = (event) => {
-    console.log(333, event.target.value);
-    console.log(deportistasFiltrados)
-
-  }
 
   const onSubmit = (event) => {
     const filtro = event.target.value;
@@ -136,17 +121,6 @@ export default function Home() {
             inputProps={{ 'aria-label': 'search' }}
           />
         </Search>
-
-        <Select
-          labelId="order-by"
-          value={orderBy}
-          label="order-by"
-          onChange={handleOrderBy}
-        >
-          <MenuItem value={'deporte'}>Deporte</MenuItem>
-          <MenuItem value={'nombre'}>Orden alfabético</MenuItem>
-          <MenuItem value={'fecha-nacimiento'}>Fecha de nacimiento</MenuItem>
-        </Select>
       </Box>
 
       <div className="container mx-auto mt-5  flex flex-row flex-wrap " style={{ width: '80%' }}>
